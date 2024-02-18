@@ -12,7 +12,7 @@ using SeminarHub.Data;
 namespace SeminarHub.Data.Migrations
 {
     [DbContext(typeof(SeminarHubDbContext))]
-    [Migration("20240218165522_InitialMigration")]
+    [Migration("20240218192909_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -143,15 +143,15 @@ namespace SeminarHub.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "e642c1df-5c1c-4957-a8a6-9654ad56bfd4",
+                            Id = "edbd1198-8ddc-43ef-b11e-de11606f5b4b",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d4f20ca8-377e-44a2-8a03-b9c452ec41dd",
+                            ConcurrencyStamp = "af558cba-5150-4bec-b2f2-db2c8835b71f",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "TEST@SOFTUNI.BG",
-                            PasswordHash = "AQAAAAEAACcQAAAAEALRMv6abgoUyI82zIzCpBXv86VWP1oTa+cLGEKwHnQ5RkGUUTPN9E7glSwUZcyflQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIaPDypDSYgVm3o58SW1z13mDQj0c0v99cc+bzzYUntLA7cOD/SN71Qz6Zu1EXzmxw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "cbe3d4a0-7077-420a-adbd-ba166eaa13d7",
+                            SecurityStamp = "abc38d25-2124-4eaa-9ad0-1dd7009a4731",
                             TwoFactorEnabled = false,
                             UserName = "test@softuni.bg"
                         });
@@ -246,14 +246,16 @@ namespace SeminarHub.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("Category identifier");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasComment("Category name");
 
                     b.HasKey("Id");
 
@@ -286,37 +288,45 @@ namespace SeminarHub.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("Seminar identifier");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("CategoryId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("Seminar cateofry identifier");
 
                     b.Property<DateTime>("DateAndTime")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasComment("Seminar beginning time and date");
 
                     b.Property<string>("Details")
                         .IsRequired()
                         .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasColumnType("nvarchar(500)")
+                        .HasComment("Seminar details");
 
                     b.Property<int>("Duration")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("Seminar duration");
 
                     b.Property<string>("Lecturer")
                         .IsRequired()
                         .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
+                        .HasColumnType("nvarchar(60)")
+                        .HasComment("Seminar lecturer");
 
                     b.Property<string>("OrganizerId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(450)")
+                        .HasComment("Seminar organizer");
 
                     b.Property<string>("Topic")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasComment("Seminar topic");
 
                     b.HasKey("Id");
 
@@ -335,7 +345,7 @@ namespace SeminarHub.Data.Migrations
                             Details = "",
                             Duration = 35,
                             Lecturer = "Yani Lozanova",
-                            OrganizerId = "e642c1df-5c1c-4957-a8a6-9654ad56bfd4",
+                            OrganizerId = "edbd1198-8ddc-43ef-b11e-de11606f5b4b",
                             Topic = "AI Unmasked: Beyond Myths and Limits"
                         },
                         new
@@ -346,7 +356,7 @@ namespace SeminarHub.Data.Migrations
                             Details = "",
                             Duration = 45,
                             Lecturer = "WOODY NORRIS",
-                            OrganizerId = "e642c1df-5c1c-4957-a8a6-9654ad56bfd4",
+                            OrganizerId = "edbd1198-8ddc-43ef-b11e-de11606f5b4b",
                             Topic = "Hypersonic sound and other inventions"
                         },
                         new
@@ -357,7 +367,7 @@ namespace SeminarHub.Data.Migrations
                             Details = "",
                             Duration = 120,
                             Lecturer = "Sarah Jones",
-                            OrganizerId = "e642c1df-5c1c-4957-a8a6-9654ad56bfd4",
+                            OrganizerId = "edbd1198-8ddc-43ef-b11e-de11606f5b4b",
                             Topic = "Let's reframe cancel culture"
                         });
                 });
@@ -365,10 +375,12 @@ namespace SeminarHub.Data.Migrations
             modelBuilder.Entity("SeminarHub.Data.Models.SeminarParticipant", b =>
                 {
                     b.Property<int>("SeminarId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("Seminar identifier");
 
                     b.Property<string>("ParticipantId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(450)")
+                        .HasComment("Identifier for an application user who is a participant in the seminar");
 
                     b.HasKey("SeminarId", "ParticipantId");
 
@@ -433,7 +445,7 @@ namespace SeminarHub.Data.Migrations
                     b.HasOne("SeminarHub.Data.Models.Category", "Category")
                         .WithMany("Seminars")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "Organizer")
@@ -452,13 +464,13 @@ namespace SeminarHub.Data.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "Participant")
                         .WithMany()
                         .HasForeignKey("ParticipantId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("SeminarHub.Data.Models.Seminar", "Seminar")
                         .WithMany("SeminarsParticipants")
                         .HasForeignKey("SeminarId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Participant");

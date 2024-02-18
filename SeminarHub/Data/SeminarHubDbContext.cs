@@ -19,21 +19,14 @@ namespace SeminarHub.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder
-                .Entity<Seminar>()
-                .HasOne(c => c.Category)
-                .WithMany(s => s.Seminars)
-                .HasForeignKey(c => c.CategoryId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder
                 .Entity<SeminarParticipant>()
                 .HasKey(sp => new { sp.SeminarId, sp.ParticipantId });
 
             builder
                 .Entity<SeminarParticipant>()
-                .HasOne(p => p.Participant)
-                .WithMany()
-                .HasForeignKey(s => s.ParticipantId)
+                .HasOne(s => s.Seminar)
+                .WithMany(s => s.SeminarsParticipants)
+                .HasForeignKey(s => s.SeminarId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.ApplyConfiguration(new UserConfiguration());
